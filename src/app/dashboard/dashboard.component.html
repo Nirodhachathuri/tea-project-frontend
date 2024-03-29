@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tea Supply Management - Login</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" routerLink="/supplier-management">Supplier Management</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/supply-Input">Supply Record</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/supply-prediction">Supply Prediction</a>
+          </li>
+
+
+        </ul>
+
+        <div class="dropdown d-flex" #dropdown>
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+            (click)="toggleDropdown()" aria-expanded="false">
+            Account
+          </button>
+          <ul class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" routerLink="">Profile</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
+          </ul>
+        </div>
+
+
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <h1 class="mb-4">Dashboard</h1>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">Filters</div>
+          <div class="card-body">
+            <form>
+              <div class="mb-3">
+                <label for="dateRange" class="form-label">Date Range:</label>
+                <!-- <input type="text" class="form-control" id="dateRange" placeholder="Select date range"> -->
+
+                <!-- <input type="date" [(ngModel)]="selectedDateRange.start">
+                <input type="date" [(ngModel)]="selectedDateRange.end"> -->
+
+                <input type="date" [(ngModel)]="selectedDateRange.start" [ngModelOptions]="{standalone: true}">
+                <input type="date" [(ngModel)]="selectedDateRange.end" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="mb-3">
+                <label for="supplier" class="form-label">Supplier:</label>
+                <select class="form-select" id="supplier" [(ngModel)]="selectedSupplier" name="selectedSupplier">
+                  <option value="All Suppliers">All Suppliers</option>
+                  <option *ngFor="let supplier of suppliers" [value]="supplier">{{ supplier }}</option>
+              </select>
+                <!-- Display the selected value -->
+            </div>            
+              <button (click)="applyFilters()">Apply Filters</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Total Suppliers</h5>
+                <p class="card-text"> totalSuppliers </p>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Total Tea Collection</h5>
+                <p class="card-text"> {{totalTeaCollection}} kg</p>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Total Expenses</h5>
+                <p class="card-text">$ totalExpenses </p>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Total Income</h5>
+                <p class="card-text">$ totalIncome </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Map Container -->
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">Map</div>
+    <div class="card-body">
+      <agm-map [latitude]="defaultLatitude" [longitude]="defaultLongitude" [zoom]="7" style="height: 300px;">
+        <agm-marker *ngFor="let location of locations" [latitude]="location.lat" [longitude]="location.lng"></agm-marker>
+      </agm-map>    
+    </div>    
+  </div>
+</div>
+
+
+
+</body>
+
+</html>

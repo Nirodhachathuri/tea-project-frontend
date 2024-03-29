@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tea Supply Management - Supply Prediction</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+  
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" routerLink="/supplier-management">Supplier Management</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/supply-Input">Supply Record</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/supply-prediction">Supply Prediction</a>
+                </li>
+            </ul>
+
+            <div class="dropdown d-flex" #dropdown>
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" (click)="toggleDropdown()" aria-expanded="false">
+                    Account
+                </button>
+                <ul class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" routerLink="">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
+                </ul>
+            </div>
+              
+
+
+          </div>
+        </div>
+      </nav>
+
+  <div class="container mt-4">
+    <h1 class="mb-4">Supply Predictions</h1>
+
+
+    <!-- <form>
+
+        <input type="date" id="startDate">
+        <input type="date" id="endDate">
+        <button type="button" onclick="predictSupply()">Predict</button>
+
+    </form> -->
+
+    <!-- <form>
+      <input type="date" #startDate>
+      <input type="date" #endDate>
+      <button type="button" (click)="predictSupply(startDate.value, endDate.value)">Predict</button>
+    </form> -->
+
+    <form>
+      
+      <label for="predictionRange">Prediction Range:</label>
+      <select id="predictionRange" name="predictionRange" [(ngModel)]="selectedRange">
+          <option value="30">30 days</option>
+          <option value="180">6 months</option>
+          <option value="365">12 months</option>
+          <option value="730">24 months</option>
+          <option value="1825">60 months</option> <!-- Assuming 5 years = 1825 days -->
+      </select>
+      
+      <button type="button" (click)="predictSupply()">Predict</button>
+  </form>
+  
+
+    <br><br>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Supply Chart</h4>
+        <!-- <div style="width: 560px;height: 600px;">
+            <canvas id="myChart" ></canvas>
+          </div> -->
+          <!-- <div *ngIf="plotImageUrl" style="width: 560px;height: 600px;">
+            <img [src]="plotImageUrl" alt="Plot Image">
+          </div> -->
+          <img [src]="plotImageUrl" alt="Predicted Supply Image" *ngIf="plotImageUrl" style="width: 560px;height: 400px;">
+      </div>
+
+      <div class="col-md-6">
+        <h4>Supply Data</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Supplier Name</th>
+              <th>Tea Supply Volume</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of predictedSupplyData">
+              <td>{{ data.supplierName }}</td>
+              <td>{{ data.predictedVolume }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+  const ctx = document.getElementById('supplyChart').getContext('2d');
+  const chartData = {
+    // Replace with your actual data
+    labels: ['Supplier A', 'Supplier B', 'Supplier C'],
+    datasets: [{
+      label: 'Tea Supply',
+      data: [120, 180, 95],
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      borderColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      borderWidth: 1
+    }]
+  };
+
+  const chartOptions = {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  };
+
+  const chart = new Chart(ctx, {
+    type: 'bar', // Bar chart
+    data: chartData,
+    options: chartOptions
+  });
+</script>
+
+<script>
+    function predictSupply() {
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
+  // Send selected dates to your prediction logic
+}
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

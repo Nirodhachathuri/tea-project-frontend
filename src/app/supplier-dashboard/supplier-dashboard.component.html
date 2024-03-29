@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supplier Profile</title>
+<!-- Bootstrap CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="container profile-container">
+        <h2 class="text-center mb-4">Supplier Profile</h2>
+        <div class="text-center">
+            <p class="lead">Welcome, {{ supplier.supplierName }}</p>
+        </div>
+        <div class="form-group">
+            <label>Email Address:</label>
+            <input type="text" class="form-control" [(ngModel)]="supplier.email" [readonly]="!isEditMode">
+        </div>
+        <div class="form-group">
+            <label>Location:</label>
+            <input type="text" class="form-control" [(ngModel)]="nearestCity" [readonly]="!isEditMode">
+        </div>
+        <div class="form-group">
+            <label>Map:</label>
+            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12" style="height: 200px;">
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            </agm-map>
+        </div>
+        <div class="form-group">
+            <label>Loyalty Points:</label>
+            <input type="text" class="form-control" [value]="supplier.loyaltyPoints" readonly>
+        </div>
+        
+        <div class="text-center">
+            <button type="button" class="btn btn-primary mr-2" (click)="toggleEditMode()" [hidden]="isEditMode">Edit</button>
+            <button type="button" class="btn btn-success mr-2" (click)="saveChanges()" [hidden]="!isEditMode">Save</button>
+            <button type="button" class="btn btn-danger" (click)="closeScreen()">Close</button>
+        </div>
+    </div>
+
+</body>
